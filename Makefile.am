@@ -4,7 +4,7 @@ common_source = exception.hh ezio.cc ezio.hh                                   \
 	child_process.hh child_process.cc signalfd.hh signalfd.cc              \
 	socket.cc socket.hh address.cc address.hh util.cc util.hh              \
 	system_runner.hh system_runner.cc socket_type.hh                       \
-	poller.hh poller.cc
+	poller.hh poller.cc prober.cc prober.hh
 
 bin_PROGRAMS = delphi
 delphi_SOURCES = $(common_source) delphi.cc

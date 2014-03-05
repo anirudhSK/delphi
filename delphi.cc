@@ -8,6 +8,7 @@
 #include "system_runner.hh"
 #include "timestamp.hh"
 #include "util.hh"
+#include "prober.hh"
 #include "config.h"
 
 std::string generate_rand_host( void ) {
@@ -46,6 +47,10 @@ int main() {
   run( {PING, "-c", "10", "128.30.77.36"} );
 
   std::cout<<"Failed DNS took "<<(stop_ms - start_ms)<<" ms\n";
+
+  /* Run Prober */
+  Prober prober(Address("128.30.77.36", 5000), 10, 20);
+  prober.send_probes();
 
   run( {"/bin/echo", "hi"});
 }
