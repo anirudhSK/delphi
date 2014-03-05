@@ -43,7 +43,7 @@ int main() {
   assert( error != 0 ); /* Must error out */
 
   /* ping 10 times */
-  run( {PING, "-c", "10", "-w", "10", "128.30.77.36"} );
+  run( {PING, "-c", "10", "128.30.77.36"} );
 
   std::cout<<"Failed DNS took "<<(stop_ms - start_ms)<<" ms\n";
 
