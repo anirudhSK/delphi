@@ -51,6 +51,4 @@ int main() {
   /* Run Prober */
   Prober prober(Address("128.30.77.36", 5000), 10, 20);
   prober.send_probes();
-
-  run( {"/bin/echo", "hi"});
 }

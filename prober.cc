@@ -23,8 +23,9 @@ void Prober::send_probes( void ) {
 }
 
 void Prober::send_packet_train( uint16_t train_size ) {
+  auto nonce = get_nonce();
   for (uint16_t i = 0; i < train_size; i++) {
-    probe_socket_.sendto(probe_server_, get_nonce() + std::string(990, 'x'));
+    probe_socket_.sendto(probe_server_, nonce + std::string(990, 'x'));
   }
 }
 
