@@ -8,6 +8,7 @@
 #include "system_runner.hh"
 #include "timestamp.hh"
 #include "util.hh"
+#include "config.h"
 
 std::string generate_rand_host( void ) {
   std::random_device rd;
@@ -40,6 +41,9 @@ int main() {
   int error = getaddrinfo(random_host.c_str(), nullptr, nullptr, &result);
   uint64_t stop_ms  = timestamp();
   assert( error != 0 ); /* Must error out */
+
+  /* ping 10 times */
+  run( {PING, "-c", "10", "-w", "10", "128.30.77.36"} );
 
   std::cout<<"Failed DNS took "<<(stop_ms - start_ms)<<" ms\n";
 
