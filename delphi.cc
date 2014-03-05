@@ -1,7 +1,13 @@
+#include <sys/socket.h>
+#include <netdb.h>
+#include <assert.h>
 #include <random>
 #include <iostream>
 #include <string>
+#include "socket_type.hh"
 #include "system_runner.hh"
+#include "timestamp.hh"
+#include "util.hh"
 
 std::string generate_rand_host( void ) {
   std::random_device rd;
@@ -21,7 +27,21 @@ std::string generate_rand_host( void ) {
 
 int main() {
   /* Generate a random alphabetical string */
-  std::cout<<generate_rand_host()<<"\n";
+  std::string random_host = generate_rand_host();
+
+  /* Make DNS query */
+  addrinfo *result;
+  /* give hints to resolver */
+  addrinfo hints;
+  zero( hints );
+  hints.ai_family = AF_INET;
+  hints.ai_socktype = SOCK_STREAM;
+  uint64_t start_ms = timestamp();
+  int error = getaddrinfo(random_host.c_str(), nullptr, nullptr, &result);
+  uint64_t stop_ms  = timestamp();
+  assert( error != 0 ); /* Must error out */
+
+  std::cout<<"Failed DNS took "<<(stop_ms - start_ms)<<" ms\n";
 
   run( {"/bin/echo", "hi"});
 }
