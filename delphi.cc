@@ -27,7 +27,16 @@ std::string generate_rand_host( void ) {
   return host;
 }
 
-int main() {
+int main(int argc, const char * argv[] ) {
+  /* Get test server from command line */
+  std::string test_server;
+  if (argc < 2) {
+    printf("Enter test server\n");
+    exit(5);
+  } else {
+    test_server = std::string(argv[1]);
+  }
+
   /* Generate a random alphabetical string */
   std::string random_host = generate_rand_host();
 
@@ -44,11 +53,11 @@ int main() {
   assert( error != 0 ); /* Must error out */
 
   /* ping 10 times */
-  run( {PING, "-c", "10", "128.30.77.36"} );
+  run( {PING, "-c", "10", test_server} );
 
   std::cout<<"Failed DNS took "<<(stop_ms - start_ms)<<" ms\n";
 
   /* Run Prober */
-  Prober prober(Address("128.30.77.36", 5000), 10, 20);
+  Prober prober(Address(test_server, 5000), 10, 20);
   prober.send_probes();
 }
